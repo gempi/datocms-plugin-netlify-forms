@@ -10,6 +10,10 @@
     "datocms-plugin",
     "netlify"
   ],
+  "files": [
+    "docs",
+    "build"
+  ],
   "datoCmsPlugin": {
     "title": "Netlify Forms",
     "coverImage": "docs/cover.png",
