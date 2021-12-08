@@ -22,8 +22,8 @@ export type ValidParameters = {
 type Parameters = ValidParameters;
 
 export default function ConfigScreen({ ctx }: PropTypes) {
-  const accessToken = ctx.plugin.attributes.parameters.accessToken;
-  const site = ctx.plugin.attributes.parameters.site;
+  const parameters = ctx.plugin.attributes.parameters;
+  const accessToken = parameters.accessToken;
   const [sites, setSites] = useState([]);
 
   useEffect(() => {
@@ -65,6 +65,10 @@ export default function ConfigScreen({ ctx }: PropTypes) {
           return errors;
         }}
         onSubmit={async (values) => {
+          if (values.accessToken !== accessToken) {
+            setSites([]);
+          }
+
           await ctx.updatePluginParameters(values);
           ctx.notice("Settings updated successfully!");
         }}
@@ -97,7 +101,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
                 )}
               </Field>
 
-              {site || sites.length > 0 ? (
+              {sites.length > 0 ? (
                 <Field name="site">
                   {({ input, meta: { error } }) => (
                     <SelectField
