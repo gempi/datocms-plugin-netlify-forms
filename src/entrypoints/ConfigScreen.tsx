@@ -55,7 +55,6 @@ export default function ConfigScreen({ ctx }: PropTypes) {
 
   return (
     <Canvas ctx={ctx}>
-      <p>Welcome to Netlify forms!</p>
       <FormHandler<Parameters>
         initialValues={ctx.plugin.attributes.parameters}
         validate={(values) => {
@@ -81,7 +80,11 @@ export default function ConfigScreen({ ctx }: PropTypes) {
                     hint={
                       <>
                         You can generate a{" "}
-                        <a href="https://app.netlify.com/user/applications#personal-access-tokens">
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href="https://app.netlify.com/user/applications#personal-access-tokens"
+                        >
                           personal access token
                         </a>{" "}
                         in your Netlify user settings.
