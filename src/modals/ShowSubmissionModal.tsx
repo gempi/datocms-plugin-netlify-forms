@@ -10,24 +10,28 @@ export default function ShowSubmissionModal({ ctx }: PropTypes) {
 
   return (
     <Canvas ctx={ctx}>
-      {fields.map((item: any) => (
-        <div
-          key={item.title}
-          style={{
-            marginBottom: "var(--spacing-m)",
-          }}
-        >
+      {fields ? (
+        fields.map((item: any) => (
           <div
+            key={item.title}
             style={{
-              color: "var(--light-body-color)",
-              fontSize: "var(--font-size-s)",
+              marginBottom: "var(--spacing-m)",
             }}
           >
-            {item.title}
+            <div
+              style={{
+                color: "var(--light-body-color)",
+                fontSize: "var(--font-size-s)",
+              }}
+            >
+              {item.title}
+            </div>
+            <div>{item.value}</div>
           </div>
-          <div>{item.value}</div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <span>No form fields found!</span>
+      )}
     </Canvas>
   );
 }
