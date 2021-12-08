@@ -11,7 +11,7 @@
     "netlify"
   ],
   "datoCmsPlugin": {
-    "title": "Netlify forms",
+    "title": "Netlify Forms",
     "coverImage": "docs/cover.png",
     "previewImage": "docs/preview.mp4",
     "entryPoint": "build/index.html",

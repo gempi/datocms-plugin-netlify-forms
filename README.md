@@ -1,4 +1,4 @@
-# Netlify forms management for DatoCMS
+# Netlify Forms management for DatoCMS
 
 Plugin that allows DatoCMS show and manage Netlify form submissions
 

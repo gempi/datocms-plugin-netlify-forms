@@ -17,7 +17,7 @@ connect({
   mainNavigationTabs(ctx: IntentCtx) {
     return [
       {
-        label: "Netlify forms",
+        label: "Netlify Forms",
         icon: "file-signature",
         pointsTo: {
           pageId: "form-submissions",
