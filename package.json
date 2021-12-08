@@ -1,0 +1,60 @@
+{
+  "name": "datocms-plugin-netlify-forms",
+  "version": "0.0.1",
+  "description": "Plugin that allows DatoCMS show and manage Netlify form submissions",
+  "homepage": "https://github.com/gempi/datocms-plugin-netlify-forms#readme",
+  "author": "Matthias Gemperli <hello@matthiasgemperli.ch>",
+  "license": "ISC",
+  "keywords": [
+    "datocms",
+    "datocms-plugin",
+    "netlify"
+  ],
+  "datoCmsPlugin": {
+    "title": "Netlify forms",
+    "coverImage": "docs/cover.png",
+    "previewImage": "docs/preview.mp4",
+    "entryPoint": "build/index.html",
+    "permissions": []
+  },
+  "dependencies": {
+    "@types/node": "^16.11.12",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "datocms-plugin-sdk": "^0.3.20",
+    "datocms-react-ui": "^0.3.21",
+    "netlify": "^10.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-final-form": "^6.5.7",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.5.2"
+  },
+  "scripts": {
+    "start": "cross-env BROWSER='none' PUBLIC_URL='/' react-scripts start",
+    "build": "cross-env PUBLIC_URL='.' react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prepublishOnly": "npm run build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
