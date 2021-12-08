@@ -56,5 +56,13 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gempi/datocms-plugin-netlify-forms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gempi/datocms-plugin-netlify-forms/issues"
   }
 }
