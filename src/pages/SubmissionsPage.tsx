@@ -29,6 +29,8 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
           }
         );
 
+        setLoading(false);
+
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;
           ctx.alert(message);
@@ -36,7 +38,6 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
         const forms = await response.json();
         setSubmissions(forms);
-        setLoading(false);
       };
 
       getSubmissions();
