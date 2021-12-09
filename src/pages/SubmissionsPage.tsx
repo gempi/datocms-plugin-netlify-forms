@@ -31,8 +31,6 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
           }
         );
 
-        setLoading(false);
-
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;
           ctx.alert(message);
@@ -40,6 +38,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
         const forms = await response.json();
         setSubmissions(forms);
+        setLoading(false);
       };
 
       getSubmissions();
@@ -106,20 +105,20 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
         }}
       >
         <h1 style={{ fontWeight: 500 }}>Form submissions</h1>
-        <div>
-          <div className={styles.rowHeader}>
-            <div style={{ width: "25%" }}>Name</div>
-            <div style={{ width: "25%" }}>Form</div>
-            <div style={{ width: "25%" }}>Date</div>
-            <div style={{ width: "25%" }}></div>
-          </div>
 
-          {loading ? (
-            <div style={{ height: "200px", position: "relative" }}>
-              <Spinner size={48} placement="centered" />
+        {loading ? (
+          <div style={{ height: "200px", position: "relative" }}>
+            <Spinner size={48} placement="centered" />
+          </div>
+        ) : submissions.length > 0 ? (
+          <div>
+            <div className={styles.rowHeader}>
+              <div style={{ width: "25%" }}>Name</div>
+              <div style={{ width: "25%" }}>Form</div>
+              <div style={{ width: "25%" }}>Date</div>
+              <div style={{ width: "25%" }}></div>
             </div>
-          ) : (
-            submissions.map((item: any) => (
+            {submissions.map((item: any) => (
               <div key={item.id} className={styles.row}>
                 <div style={{ width: "25%" }}>{item.name}</div>
                 <div style={{ width: "25%" }}>{item.form_name}</div>
@@ -147,9 +146,11 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                   </Button>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <>No form submissions found!</>
+        )}
       </div>
     </Canvas>
   );
