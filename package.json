@@ -17,7 +17,7 @@
   "datoCmsPlugin": {
     "title": "Netlify Forms",
     "coverImage": "docs/cover.png",
-    "previewImage": "docs/preview.mp4",
+    "previewImage": "docs/demo.gif",
     "entryPoint": "build/index.html",
     "permissions": []
   },
