@@ -1,6 +1,6 @@
 {
   "name": "datocms-plugin-netlify-forms",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Plugin that allows DatoCMS show and manage Netlify form submissions",
   "homepage": "https://github.com/gempi/datocms-plugin-netlify-forms#readme",
   "author": "Matthias Gemperli <hello@matthiasgemperli.ch>",
@@ -17,7 +17,7 @@
   "datoCmsPlugin": {
     "title": "Netlify Forms",
     "coverImage": "docs/cover.png",
-    "previewImage": "docs/demo.gif",
+    "previewImage": "docs/demo.mp4",
     "entryPoint": "build/index.html",
     "permissions": []
   },
