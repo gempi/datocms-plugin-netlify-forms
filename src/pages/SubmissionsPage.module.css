@@ -1,0 +1,21 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px;
+  border-bottom-color: var(--darker-border-color);
+  border-bottom-style: solid;
+  padding-top: var(--spacing-s);
+  padding-bottom: var(--spacing-s);
+  align-items: center;
+}
+
+.rowHeader {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px;
+  border-bottom-color: var(--darker-border-color);
+  border-bottom-style: solid;
+  padding-top: var(--spacing-m);
+  padding-bottom: var(--spacing-m);
+  font-weight: 500;
+}

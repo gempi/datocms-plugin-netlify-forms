@@ -1,0 +1,8 @@
+.item {
+  margin-bottom: var(--spacing-m);
+}
+
+.itemTitle {
+  color: var(--light-body-color);
+  font-size: var(--font-size-s);
+}

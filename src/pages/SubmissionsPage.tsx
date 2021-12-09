@@ -2,6 +2,7 @@ import { RenderPageCtx } from "datocms-plugin-sdk";
 import { Button, Canvas, Spinner } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import { ValidParameters } from "../entrypoints/ConfigScreen";
+import styles from "./SubmissionsPage.module.css";
 
 type PropTypes = {
   ctx: RenderPageCtx;
@@ -106,23 +107,11 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
       >
         <h1 style={{ fontWeight: 500 }}>Form submissions</h1>
         <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              borderBottom: 1,
-              borderBottomColor: "var(--darker-border-color)",
-              borderBottomStyle: "solid",
-              paddingTop: "var(--spacing-m)",
-              paddingBottom: "var(--spacing-m)",
-              fontWeight: 500,
-            }}
-          >
-            <span style={{ width: "25%" }}>Name</span>
-            <span style={{ width: "25%" }}>Form</span>
-            <span style={{ width: "25%" }}>Date</span>
-            <span style={{ width: "25%", flexGrow: 0 }}></span>
-            <span></span>
+          <div className={styles.rowHeader}>
+            <div style={{ width: "25%" }}>Name</div>
+            <div style={{ width: "25%" }}>Form</div>
+            <div style={{ width: "25%" }}>Date</div>
+            <div style={{ width: "25%" }}></div>
           </div>
 
           {loading ? (
@@ -131,29 +120,15 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
             </div>
           ) : (
             submissions.map((item: any) => (
-              <div
-                key={item.id}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  borderBottom: 1,
-                  borderBottomColor: "var(--darker-border-color)",
-                  borderBottomStyle: "solid",
-                  paddingTop: "var(--spacing-m)",
-                  paddingBottom: "var(--spacing-m)",
-                  alignItems: "center",
-                }}
-              >
-                <span style={{ width: "25%", flexGrow: 0 }}>{item.name}</span>
-                <span style={{ width: "25%", flexGrow: 0 }}>
-                  {item.form_name}
-                </span>
-                <span style={{ width: "25%", flexGrow: 0 }}>
+              <div key={item.id} className={styles.row}>
+                <div style={{ width: "25%" }}>{item.name}</div>
+                <div style={{ width: "25%" }}>{item.form_name}</div>
+                <div style={{ width: "25%", flexGrow: 0 }}>
                   {new Intl.DateTimeFormat("en-US").format(
                     new Date(item.created_at)
                   )}
-                </span>
-                <span style={{ width: "25%", flexGrow: 0, textAlign: "right" }}>
+                </div>
+                <div style={{ width: "25%", textAlign: "right" }}>
                   <Button
                     buttonSize="xs"
                     type="button"
@@ -170,7 +145,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                   >
                     Delete
                   </Button>
-                </span>
+                </div>
               </div>
             ))
           )}
