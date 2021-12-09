@@ -27,30 +27,6 @@ export default function ConfigScreen({ ctx }: PropTypes) {
   const accessToken = parameters.accessToken;
   const [sites, setSites] = useState([]);
 
-  useEffect(() => {
-    if (accessToken) {
-      setSites([]);
-      const getSites = async () => {
-        const response = await window.fetch(`${API_ENDPOINT}/sites/`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          const message = `An error has occured: ${response.status}`;
-          ctx.alert(message);
-        }
-
-        const sites = await response.json();
-        setSites(sites);
-      };
-
-      getSites();
-    }
-  }, [ctx, accessToken]);
-
   return (
     <Canvas ctx={ctx}>
       <FormHandler<Parameters>
@@ -63,11 +39,26 @@ export default function ConfigScreen({ ctx }: PropTypes) {
           return errors;
         }}
         onSubmit={async (values) => {
-          if (values.accessToken !== accessToken) {
-            setSites([]);
+          const response = await window.fetch(`${API_ENDPOINT}/sites/`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${values.accessToken}`,
+            },
+          });
+
+          if (!response.ok) {
+            const message = `An error has occured: ${response.status}`;
+            ctx.alert(message);
           }
 
-          await ctx.updatePluginParameters(values);
+          const sites = await response.json();
+          setSites(sites);
+
+          await ctx.updatePluginParameters({
+            ...values,
+            ...(values.accessToken !== accessToken ? { site: null } : {}),
+          });
+
           ctx.notice("Settings updated successfully!");
         }}
       >
