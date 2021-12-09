@@ -7,7 +7,7 @@ import {
   FieldGroup,
   SelectField,
 } from "datocms-react-ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
 import { API_ENDPOINT } from "..";
 
@@ -26,6 +26,24 @@ export default function ConfigScreen({ ctx }: PropTypes) {
   const parameters = ctx.plugin.attributes.parameters;
   const accessToken = parameters.accessToken;
   const [sites, setSites] = useState([]);
+
+  useEffect(() => {
+    const fetchSites = async () => {
+      const response = await window.fetch(`${API_ENDPOINT}/sites/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const sites = await response.json();
+      setSites(sites);
+    };
+
+    if (accessToken) {
+      fetchSites();
+    }
+  }, [accessToken]);
 
   return (
     <Canvas ctx={ctx}>
@@ -90,7 +108,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
                 )}
               </Field>
 
-              {sites.length > 0 ? (
+              {sites.length > 0 || parameters.site ? (
                 <Field name="site">
                   {({ input, meta: { error } }) => (
                     <SelectField
