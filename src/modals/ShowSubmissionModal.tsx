@@ -12,7 +12,7 @@ export default function ShowSubmissionModal({ ctx }: PropTypes) {
 
   return (
     <Canvas ctx={ctx}>
-      {fields ? (
+      {fields.length > 0 ? (
         fields.map((item: any) => (
           <div key={item.title} className={styles.item}>
             <div className={styles.itemTitle}>{item.title}</div>
