@@ -7,7 +7,7 @@ import {
   FieldGroup,
   SelectField,
 } from "datocms-react-ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
 import { API_ENDPOINT } from "..";
 
