@@ -9,6 +9,7 @@ import {
 } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
+import { API_ENDPOINT } from "..";
 
 type PropTypes = {
   ctx: RenderConfigScreenCtx;
@@ -30,15 +31,12 @@ export default function ConfigScreen({ ctx }: PropTypes) {
     if (accessToken) {
       setSites([]);
       const getSites = async () => {
-        const response = await window.fetch(
-          "https://api.netlify.com/api/v1/sites/",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await window.fetch(`${API_ENDPOINT}/sites/`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;

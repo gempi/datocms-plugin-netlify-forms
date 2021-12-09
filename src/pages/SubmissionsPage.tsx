@@ -1,6 +1,7 @@
 import { RenderPageCtx } from "datocms-plugin-sdk";
 import { Button, Canvas, Spinner } from "datocms-react-ui";
 import { useEffect, useState } from "react";
+import { API_ENDPOINT } from "..";
 import { ValidParameters } from "../entrypoints/ConfigScreen";
 import styles from "./SubmissionsPage.module.css";
 
@@ -21,7 +22,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
       const getSubmissions = async () => {
         setLoading(true);
         const response = await window.fetch(
-          `https://api.netlify.com/api/v1/sites/${site.value}/submissions`,
+          `${API_ENDPOINT}/sites/${site.value}/submissions`,
           {
             method: "GET",
             headers: {
@@ -43,17 +44,16 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
       getSubmissions();
     }
-  }, [site, accessToken, ctx]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [site, accessToken]);
 
   const handleShowSubmissionModal = async (submission: any) => {
-    const result: any = await ctx.openModal({
+    await ctx.openModal({
       id: "showSubmission",
       title: `Submission (${submission.id})`,
       width: "l",
       parameters: submission,
     });
-
-    ctx.notice(result);
   };
 
   const handleOpenDeleteSubmissonModal = async (submission: any) => {
@@ -76,7 +76,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
     if (result) {
       const response = await window.fetch(
-        `https://api.netlify.com/api/v1/submissions/${submission.id}`,
+        `${API_ENDPOINT}/submissions/${submission.id}`,
         {
           method: "DELETE",
           headers: {
@@ -149,8 +149,6 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
               </div>
             ))
           )}
-
-          {}
         </div>
       </div>
     </Canvas>
