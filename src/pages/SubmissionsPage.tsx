@@ -1,5 +1,12 @@
 import { RenderPageCtx } from "datocms-plugin-sdk";
-import { Button, Canvas, Spinner } from "datocms-react-ui";
+import {
+  Button,
+  Canvas,
+  Spinner,
+  Toolbar,
+  ToolbarStack,
+  ToolbarTitle,
+} from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import { API_ENDPOINT } from "..";
 import { ValidParameters } from "../entrypoints/ConfigScreen";
@@ -97,6 +104,18 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
   return (
     <Canvas ctx={ctx}>
+      <Toolbar
+        style={{
+          paddingTop: "var(--spacing-m)",
+          paddingBottom: "var(--spacing-m)",
+        }}
+      >
+        <ToolbarStack stackSize="l">
+          <ToolbarTitle>Form submissions</ToolbarTitle>
+          <div style={{ flex: "1" }} />
+        </ToolbarStack>
+      </Toolbar>
+
       <div
         style={{
           paddingTop: "var(--spacing-l)",
@@ -104,10 +123,10 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
           paddingRight: "var(--spacing-xxl)",
         }}
       >
-        <h1 style={{ fontWeight: 500 }}>Form submissions</h1>
-
         {loading ? (
-          <div style={{ height: "200px", position: "relative" }}>
+          <div
+            style={{ marginTop: "var(--spacing-xxl)", position: "relative" }}
+          >
             <Spinner size={48} placement="centered" />
           </div>
         ) : submissions.length > 0 ? (
