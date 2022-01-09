@@ -113,6 +113,9 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
         <ToolbarStack stackSize="l">
           <ToolbarTitle>Form submissions</ToolbarTitle>
           <div style={{ flex: "1" }} />
+          <div>
+            {submissions.length} record{submissions.length > 1 ? "s" : ""}
+          </div>
         </ToolbarStack>
       </Toolbar>
 
