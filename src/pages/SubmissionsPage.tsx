@@ -2,6 +2,11 @@ import { RenderPageCtx } from "datocms-plugin-sdk";
 import {
   Button,
   Canvas,
+  CaretDownIcon,
+  CaretUpIcon,
+  Dropdown,
+  DropdownMenu,
+  DropdownOption,
   Spinner,
   Toolbar,
   ToolbarStack,
@@ -23,13 +28,14 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [type, setType] = useState("verified");
 
   useEffect(() => {
     if (accessToken && site) {
       const getSubmissions = async () => {
         setLoading(true);
         const response = await window.fetch(
-          `${API_ENDPOINT}/sites/${site.value}/submissions`,
+          `${API_ENDPOINT}/sites/${site.value}/submissions?state=${type}`,
           {
             method: "GET",
             headers: {
@@ -51,7 +57,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
       getSubmissions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [site, accessToken]);
+  }, [site, accessToken, type]);
 
   const handleShowSubmissionModal = async (submission: any) => {
     await ctx.openModal({
@@ -126,6 +132,25 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
           paddingRight: "var(--spacing-xxl)",
         }}
       >
+        <Dropdown
+          renderTrigger={({ open, onClick }) => (
+            <Button
+              onClick={onClick}
+              rightIcon={open ? <CaretUpIcon /> : <CaretDownIcon />}
+            >
+              {type[0].toUpperCase() + type.slice(1).toLowerCase()} submissions
+            </Button>
+          )}
+        >
+          <DropdownMenu>
+            <DropdownOption onClick={() => setType("verfied")}>
+              Verified submissions
+            </DropdownOption>
+            <DropdownOption onClick={() => setType("spam")}>
+              Spam submissions
+            </DropdownOption>
+          </DropdownMenu>
+        </Dropdown>
         {loading ? (
           <div
             style={{ marginTop: "var(--spacing-xxl)", position: "relative" }}
@@ -171,7 +196,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
             ))}
           </div>
         ) : (
-          <>No form submissions found!</>
+          <p>No form submissions found!</p>
         )}
       </div>
     </Canvas>
