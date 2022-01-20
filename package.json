@@ -22,12 +22,12 @@
     "permissions": []
   },
   "dependencies": {
-    "@types/node": "^17.0.8",
+    "@types/node": "^17.0.10",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
-    "datocms-plugin-sdk": "^0.3.32",
-    "datocms-react-ui": "^0.3.32",
-    "netlify": "^10.1.1",
+    "datocms-plugin-sdk": "^0.3.34",
+    "datocms-react-ui": "^0.3.34",
+    "netlify": "^10.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.7",
