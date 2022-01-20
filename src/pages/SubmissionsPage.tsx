@@ -28,7 +28,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState("verified");
+  const [type, setType] = useState("ham");
 
   useEffect(() => {
     if (accessToken && site) {
@@ -138,12 +138,12 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
               onClick={onClick}
               rightIcon={open ? <CaretUpIcon /> : <CaretDownIcon />}
             >
-              {type[0].toUpperCase() + type.slice(1).toLowerCase()} submissions
+              {type === "ham" ? "Verified" : "Spam"} submissions
             </Button>
           )}
         >
           <DropdownMenu>
-            <DropdownOption onClick={() => setType("verfied")}>
+            <DropdownOption onClick={() => setType("ham")}>
               Verified submissions
             </DropdownOption>
             <DropdownOption onClick={() => setType("spam")}>
