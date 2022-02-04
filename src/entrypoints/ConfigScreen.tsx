@@ -44,6 +44,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
     if (accessToken) {
       fetchSites();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   return (
