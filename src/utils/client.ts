@@ -8,8 +8,17 @@ export default class NetlifyClient {
     this.accessToken = accessToken;
   }
 
-  submissionsBySite(site: string, state?: string) {
-    return this.fetch(`/sites/${site}/submissions/`, "GET", { state });
+  submissionsBySite(
+    site: string,
+    state?: string,
+    per_page?: number,
+    page?: number
+  ) {
+    return this.fetch(`/sites/${site}/submissions/`, "GET", {
+      state,
+      per_page,
+      page,
+    });
   }
 
   deleteSubmissionById(id: string) {
@@ -35,8 +44,7 @@ export default class NetlifyClient {
       if (!response.ok) {
         throw Error(`An error has occured: ${response.status}`);
       } else {
-        if (response.status === 204) return "";
-        return response.json();
+        return response;
       }
     });
   }

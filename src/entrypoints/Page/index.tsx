@@ -36,7 +36,8 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     if (accessToken && site) {
       const getSubmissions = async () => {
         setLoading(true);
-        const submissions = await client.submissionsBySite(site.value, type);
+        const res = await client.submissionsBySite(site.value, type);
+        const submissions = await res.json();
 
         setSubmissions(submissions);
         setLoading(false);

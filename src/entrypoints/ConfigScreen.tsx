@@ -34,7 +34,8 @@ export default function ConfigScreen({ ctx }: PropTypes) {
       setSites([]);
 
       try {
-        const sites = await client.sites();
+        const res = await client.sites();
+        const sites = await res.json();
         setSites(sites);
       } catch (error: any) {
         ctx.alert(error.message);
@@ -62,7 +63,8 @@ export default function ConfigScreen({ ctx }: PropTypes) {
         }}
         onSubmit={async (values) => {
           try {
-            const sites = await client.sites();
+            const res = await client.sites();
+            const sites = await res.json();
             setSites(sites);
           } catch (error: any) {
             ctx.alert(error.message);
