@@ -27,26 +27,32 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
   const accessToken = parameters.accessToken;
 
   const [submissions, setSubmissions] = useState([]);
+  const [page, setPage] = useState<number>(1);
+  const [numberOfPages, setNumberOfPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState("ham");
 
   const client = new Client({ accessToken });
 
+  const getSubmissions = async () => {
+    setLoading(true);
+    const res = await client.submissionsBySite(site.value, type, 10, page);
+    const submissions = await res.json();
+
+    const links = res.headers.get("link")?.split(",");
+    const lastPage = links?.[links.length - 1].match(/&page=(\d+).*$/)?.[1];
+    setNumberOfPages(Number(lastPage));
+
+    setSubmissions(submissions);
+    setLoading(false);
+  };
+
   useEffect(() => {
     if (accessToken && site) {
-      const getSubmissions = async () => {
-        setLoading(true);
-        const res = await client.submissionsBySite(site.value, type);
-        const submissions = await res.json();
-
-        setSubmissions(submissions);
-        setLoading(false);
-      };
-
       getSubmissions();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [site, accessToken, type]);
+  }, [site, accessToken, type, page]);
 
   const handleShowSubmissionModal = async (submission: any) => {
     await ctx.openModal({
@@ -78,9 +84,8 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     if (result) {
       try {
         await client.deleteSubmissionById(submission.id);
-        setSubmissions(
-          submissions.filter((item: any) => item.id !== submission.id)
-        );
+        await getSubmissions();
+        setPage(1);
         ctx.notice("Record successfully removed");
       } catch (error: any) {
         ctx.alert(error.message);
@@ -131,6 +136,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
             </DropdownOption>
           </DropdownMenu>
         </Dropdown>
+
         {loading ? (
           <div
             style={{ marginTop: "var(--spacing-xxl)", position: "relative" }}
@@ -174,6 +180,28 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                 </div>
               </div>
             ))}
+
+            <div className={styles.pagination}>
+              <div>
+                <Button
+                  buttonSize="s"
+                  onClick={() => setPage(page - 1)}
+                  disabled={page === 1}
+                >
+                  Back
+                </Button>
+              </div>
+              <div className={styles.pagination__page}>Page {page}</div>
+              <div>
+                <Button
+                  buttonSize="s"
+                  onClick={() => setPage(page + 1)}
+                  disabled={page === numberOfPages}
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
           </div>
         ) : (
           <p>No form submissions found!</p>

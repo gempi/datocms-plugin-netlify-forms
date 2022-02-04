@@ -19,3 +19,17 @@
   padding-bottom: var(--spacing-m);
   font-weight: 500;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  padding-top: var(--spacing-m);
+  padding-bottom: var(--spacing-m);
+}
+
+.pagination__page {
+  margin-left: var(--spacing-l);
+  margin-right: var(--spacing-l);
+}
