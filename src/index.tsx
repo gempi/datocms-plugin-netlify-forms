@@ -7,8 +7,8 @@ import {
 import { render } from "./utils/render";
 import ConfigScreen from "./entrypoints/ConfigScreen";
 import "datocms-react-ui/styles.css";
-import SubmissionsPage from "./pages/SubmissionsPage";
-import ShowSubmissionModal from "./modals/ShowSubmissionModal";
+import SubmissionsPage from "./entrypoints/Page";
+import SubmissionModal from "./modals/SubmissionModal";
 
 export const API_ENDPOINT = "https://api.netlify.com/api/v1";
 
@@ -37,7 +37,7 @@ connect({
   renderModal(modalId: string, ctx: RenderModalCtx) {
     switch (modalId) {
       case "showSubmission":
-        return render(<ShowSubmissionModal ctx={ctx} />);
+        return render(<SubmissionModal ctx={ctx} />);
     }
   },
 });

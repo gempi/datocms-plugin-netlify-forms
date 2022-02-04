@@ -1,7 +1,7 @@
 import { RenderModalCtx } from "datocms-plugin-sdk";
 import { Canvas } from "datocms-react-ui";
 
-import styles from "./ShowSubmissionModal.module.css";
+import styles from "./SubmissionModal.module.css";
 
 type PropTypes = {
   ctx: RenderModalCtx;

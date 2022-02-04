@@ -9,7 +9,7 @@ import {
 } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
-import { API_ENDPOINT } from "..";
+import Client from "../utils/client";
 
 type PropTypes = {
   ctx: RenderConfigScreenCtx;
@@ -24,20 +24,21 @@ type Parameters = ValidParameters;
 
 export default function ConfigScreen({ ctx }: PropTypes) {
   const parameters = ctx.plugin.attributes.parameters;
-  const accessToken = parameters.accessToken;
+  const accessToken = parameters.accessToken as string;
   const [sites, setSites] = useState([]);
+
+  const client = new Client({ accessToken });
 
   useEffect(() => {
     const fetchSites = async () => {
-      const response = await window.fetch(`${API_ENDPOINT}/sites/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      setSites([]);
 
-      const sites = await response.json();
-      setSites(sites);
+      try {
+        const sites = await client.sites();
+        setSites(sites);
+      } catch (error: any) {
+        ctx.alert(error.message);
+      }
     };
 
     if (accessToken) {
@@ -51,26 +52,20 @@ export default function ConfigScreen({ ctx }: PropTypes) {
         initialValues={ctx.plugin.attributes.parameters}
         validate={(values) => {
           const errors: Record<string, string> = {};
-          if (!values.accessToken) {
+
+          if (!("accessToken" in values) || !values.accessToken) {
             errors.accessToken = "This field is required!";
           }
+
           return errors;
         }}
         onSubmit={async (values) => {
-          const response = await window.fetch(`${API_ENDPOINT}/sites/`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${values.accessToken}`,
-            },
-          });
-
-          if (!response.ok) {
-            const message = `An error has occured: ${response.status}`;
-            ctx.alert(message);
+          try {
+            const sites = await client.sites();
+            setSites(sites);
+          } catch (error: any) {
+            ctx.alert(error.message);
           }
-
-          const sites = await response.json();
-          setSites(sites);
 
           await ctx.updatePluginParameters({
             ...values,

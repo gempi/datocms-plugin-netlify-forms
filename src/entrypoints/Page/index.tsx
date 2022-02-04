@@ -13,9 +13,9 @@ import {
   ToolbarTitle,
 } from "datocms-react-ui";
 import { useEffect, useState } from "react";
-import { API_ENDPOINT } from "..";
-import { ValidParameters } from "../entrypoints/ConfigScreen";
-import styles from "./SubmissionsPage.module.css";
+import { ValidParameters } from "../ConfigScreen";
+import styles from "./style.module.css";
+import Client from "../../utils/client";
 
 type PropTypes = {
   ctx: RenderPageCtx;
@@ -30,27 +30,15 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState("ham");
 
+  const client = new Client({ accessToken });
+
   useEffect(() => {
     if (accessToken && site) {
       const getSubmissions = async () => {
         setLoading(true);
-        const response = await window.fetch(
-          `${API_ENDPOINT}/sites/${site.value}/submissions?state=${type}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const submissions = await client.submissionsBySite(site.value, type);
 
-        if (!response.ok) {
-          const message = `An error has occured: ${response.status}`;
-          ctx.alert(message);
-        }
-
-        const forms = await response.json();
-        setSubmissions(forms);
+        setSubmissions(submissions);
         setLoading(false);
       };
 
@@ -87,23 +75,14 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     });
 
     if (result) {
-      const response = await window.fetch(
-        `${API_ENDPOINT}/submissions/${submission.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        ctx.alert(`An error has occured: ${response.status}`);
-      } else {
+      try {
+        await client.deleteSubmissionById(submission.id);
         setSubmissions(
           submissions.filter((item: any) => item.id !== submission.id)
         );
         ctx.notice("Record successfully removed");
+      } catch (error: any) {
+        ctx.alert(error.message);
       }
     }
   };

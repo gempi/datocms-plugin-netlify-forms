@@ -28,6 +28,7 @@
     "datocms-plugin-sdk": "^0.5.2",
     "datocms-react-ui": "^0.5.2",
     "netlify": "^10.1.2",
+    "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.8",
