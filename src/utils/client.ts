@@ -21,8 +21,12 @@ export default class NetlifyClient {
     });
   }
 
-  deleteSubmissionById(id: string) {
+  deleteSubmission(id: string) {
     return this.fetch(`/submissions/${id}`, "DELETE");
+  }
+
+  changeSubmissionState(id: string, state: "ham" | "spam") {
+    return this.fetch(`/submissions/${id}/${state}`, "PUT");
   }
 
   sites() {

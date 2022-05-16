@@ -83,10 +83,42 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
     if (result) {
       try {
-        await client.deleteSubmissionById(submission.id);
+        await client.deleteSubmission(submission.id);
         await getSubmissions();
         setPage(1);
         ctx.notice("Record successfully removed");
+      } catch (error: any) {
+        ctx.alert(error.message);
+      }
+    }
+  };
+
+  const handleOpenChangeSubmissonStateModal = async (
+    submission: any,
+    type: "ham" | "spam"
+  ) => {
+    const result: any = await ctx.openConfirm({
+      title: "Change record?",
+      content: "Are you sure you want to change this record?",
+      choices: [
+        {
+          label: "Yes, change this record",
+          value: "negative",
+          intent: "negative",
+        },
+      ],
+      cancel: {
+        label: "Cancel",
+        value: false,
+      },
+    });
+
+    if (result) {
+      try {
+        await client.changeSubmissionState(submission.id, type);
+        await getSubmissions();
+        setPage(1);
+        ctx.notice("Record successfully changed");
       } catch (error: any) {
         ctx.alert(error.message);
       }
@@ -147,20 +179,21 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
           <div>
             <div className={styles.rowHeader}>
               <div style={{ width: "25%" }}>Name</div>
-              <div style={{ width: "25%" }}>Form</div>
-              <div style={{ width: "25%" }}>Date</div>
-              <div style={{ width: "25%" }}></div>
+              <div style={{ width: "20%" }}>Form</div>
+              <div style={{ width: "20%" }}>Date</div>
+              <div style={{ width: "35%" }}></div>
             </div>
             {submissions.map((item: any) => (
               <div key={item.id} className={styles.row}>
                 <div style={{ width: "25%" }}>{item.name}</div>
-                <div style={{ width: "25%" }}>{item.form_name}</div>
-                <div style={{ width: "25%", flexGrow: 0 }}>
+                <div style={{ width: "20%" }}>{item.form_name}</div>
+                <div style={{ width: "20%", flexGrow: 0 }}>
                   {new Intl.DateTimeFormat("en-US").format(
                     new Date(item.created_at)
                   )}
                 </div>
-                <div style={{ width: "25%", textAlign: "right" }}>
+
+                <div style={{ width: "35%", textAlign: "right" }}>
                   <Button
                     buttonSize="xs"
                     type="button"
@@ -168,6 +201,20 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                     style={{ marginRight: "var(--spacing-m)" }}
                   >
                     Show
+                  </Button>
+                  <Button
+                    buttonSize="xs"
+                    type="reset"
+                    buttonType="muted"
+                    onClick={() =>
+                      handleOpenChangeSubmissonStateModal(
+                        item,
+                        type === "ham" ? "spam" : "ham"
+                      )
+                    }
+                    style={{ marginRight: "var(--spacing-m)" }}
+                  >
+                    {type === "ham" ? "Mark as spam" : "Mark as verified"}
                   </Button>
                   <Button
                     buttonSize="xs"
