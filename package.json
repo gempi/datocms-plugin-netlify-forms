@@ -22,18 +22,18 @@
     "permissions": []
   },
   "dependencies": {
-    "@types/node": "^17.0.23",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
     "datocms-plugin-sdk": "^0.5.2",
     "datocms-react-ui": "^0.5.2",
-    "netlify": "^11.0.1",
-    "qs": "^6.10.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "netlify": "^11.0.2",
+    "qs": "^6.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9",
-    "react-scripts": "^5.0.0",
-    "typescript": "^4.6.3"
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.7.4"
   },
   "scripts": {
     "start": "cross-env BROWSER='none' PUBLIC_URL='/' react-scripts start",
