@@ -27,13 +27,12 @@ export default function ConfigScreen({ ctx }: PropTypes) {
   const accessToken = parameters.accessToken as string;
   const [sites, setSites] = useState([]);
 
-  const client = new Client({ accessToken });
-
   useEffect(() => {
     const fetchSites = async () => {
       setSites([]);
 
       try {
+        const client = new Client({ accessToken });
         const res = await client.sites();
         const sites = await res.json();
         setSites(sites);
@@ -42,11 +41,8 @@ export default function ConfigScreen({ ctx }: PropTypes) {
       }
     };
 
-    if (accessToken) {
-      fetchSites();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken]);
+    if (accessToken) fetchSites();
+  }, [accessToken, ctx]);
 
   return (
     <Canvas ctx={ctx}>
@@ -62,14 +58,6 @@ export default function ConfigScreen({ ctx }: PropTypes) {
           return errors;
         }}
         onSubmit={async (values) => {
-          try {
-            const res = await client.sites();
-            const sites = await res.json();
-            setSites(sites);
-          } catch (error: any) {
-            ctx.alert(error.message);
-          }
-
           await ctx.updatePluginParameters({
             ...values,
             ...(values.accessToken !== accessToken ? { site: null } : {}),
