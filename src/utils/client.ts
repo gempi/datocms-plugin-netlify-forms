@@ -1,4 +1,3 @@
-import qs from "qs";
 import { ValidParameters } from "../types";
 
 export default class NetlifyClient {
@@ -33,11 +32,9 @@ export default class NetlifyClient {
     return this.fetch(`/sites/`, "GET");
   }
 
-  fetch(path: string, method: string, params?: any) {
+  async fetch(path: string, method: string, params?: any) {
     return fetch(
-      `https://api.netlify.com/api/v1${path}${qs.stringify(params, {
-        addQueryPrefix: true,
-      })}`,
+      `https://api.netlify.com/api/v1${path}?${new URLSearchParams(params)}`,
       {
         method,
         headers: {
