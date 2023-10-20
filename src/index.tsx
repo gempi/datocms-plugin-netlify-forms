@@ -16,6 +16,7 @@ connect({
   renderConfigScreen(ctx) {
     return render(<ConfigScreen ctx={ctx} />);
   },
+
   mainNavigationTabs(ctx: IntentCtx) {
     return [
       {
@@ -24,7 +25,7 @@ connect({
         pointsTo: {
           pageId: "form-submissions",
         },
-        placement: ["before", "settings"],
+        placement: ["before", "configuration"],
       },
     ];
   },
