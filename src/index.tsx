@@ -1,9 +1,4 @@
-import {
-  connect,
-  IntentCtx,
-  RenderModalCtx,
-  RenderPageCtx,
-} from "datocms-plugin-sdk";
+import { connect, RenderModalCtx, RenderPageCtx } from "datocms-plugin-sdk";
 import { render } from "./utils/render";
 import ConfigScreen from "./entrypoints/ConfigScreen";
 import "datocms-react-ui/styles.css";
