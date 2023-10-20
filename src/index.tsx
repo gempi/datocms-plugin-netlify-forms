@@ -17,7 +17,7 @@ connect({
     return render(<ConfigScreen ctx={ctx} />);
   },
 
-  mainNavigationTabs(ctx: IntentCtx) {
+  mainNavigationTabs() {
     return [
       {
         label: "Netlify Forms",

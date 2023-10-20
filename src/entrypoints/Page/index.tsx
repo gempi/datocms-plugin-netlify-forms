@@ -7,6 +7,7 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownOption,
+  DropdownSeparator,
   Spinner,
   Toolbar,
   ToolbarStack,
@@ -181,10 +182,14 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
               <div style={{ width: "25%" }}>Name</div>
               <div style={{ width: "20%" }}>Form</div>
               <div style={{ width: "20%" }}>Date</div>
-              <div style={{ width: "35%" }}></div>
+              <div style={{ width: "120px" }}></div>
             </div>
             {submissions.map((item: any) => (
-              <div key={item.id} className={styles.row}>
+              <div
+                key={item.id}
+                className={styles.row}
+                onClick={() => handleShowSubmissionModal(item)}
+              >
                 <div style={{ width: "25%" }}>{item.name}</div>
                 <div style={{ width: "20%" }}>{item.form_name}</div>
                 <div style={{ width: "20%", flexGrow: 0 }}>
@@ -193,37 +198,46 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                   )}
                 </div>
 
-                <div style={{ width: "35%", textAlign: "right" }}>
-                  <Button
-                    buttonSize="xs"
-                    type="button"
-                    onClick={() => handleShowSubmissionModal(item)}
-                    style={{ marginRight: "var(--spacing-m)" }}
+                <div style={{ width: "120px", textAlign: "right" }}>
+                  <Dropdown
+                    renderTrigger={({ open, onClick }) => (
+                      <Button
+                        buttonSize="xs"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onClick();
+                        }}
+                        rightIcon={open ? <CaretUpIcon /> : <CaretDownIcon />}
+                      >
+                        Options
+                      </Button>
+                    )}
                   >
-                    Show
-                  </Button>
-                  <Button
-                    buttonSize="xs"
-                    type="reset"
-                    buttonType="muted"
-                    onClick={() =>
-                      handleOpenChangeSubmissonStateModal(
-                        item,
-                        type === "ham" ? "spam" : "ham"
-                      )
-                    }
-                    style={{ marginRight: "var(--spacing-m)" }}
-                  >
-                    {type === "ham" ? "Mark as spam" : "Mark as verified"}
-                  </Button>
-                  <Button
-                    buttonSize="xs"
-                    type="reset"
-                    buttonType="negative"
-                    onClick={() => handleOpenDeleteSubmissonModal(item)}
-                  >
-                    Delete
-                  </Button>
+                    <DropdownMenu alignment="right">
+                      <DropdownOption
+                        onClick={() => handleShowSubmissionModal(item)}
+                      >
+                        Show
+                      </DropdownOption>
+                      <DropdownOption
+                        onClick={() =>
+                          handleOpenChangeSubmissonStateModal(
+                            item,
+                            type === "ham" ? "spam" : "ham"
+                          )
+                        }
+                      >
+                        {type === "ham" ? "Mark as spam" : "Mark as verified"}
+                      </DropdownOption>
+                      <DropdownSeparator />
+                      <DropdownOption
+                        red
+                        onClick={() => handleOpenDeleteSubmissonModal(item)}
+                      >
+                        Delete
+                      </DropdownOption>
+                    </DropdownMenu>
+                  </Dropdown>
                 </div>
               </div>
             ))}

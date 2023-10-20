@@ -9,6 +9,11 @@
   align-items: center;
 }
 
+.row:hover {
+  background-color: var(--light-color);
+  cursor: pointer;
+}
+
 .rowHeader {
   display: flex;
   justify-content: space-between;
