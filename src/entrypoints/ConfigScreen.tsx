@@ -72,6 +72,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
               <Field name="accessToken">
                 {({ input, meta: { error } }) => (
                   <TextField
+                    textInputProps={{ type: "password" }}
                     id="accessToken"
                     label="Access token"
                     hint={
