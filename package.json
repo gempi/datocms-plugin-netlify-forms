@@ -5,16 +5,12 @@
   "type": "module",
   "description": "Plugin that allows DatoCMS show and manage Netlify form submissions",
   "homepage": "https://github.com/gempi/datocms-plugin-netlify-forms#readme",
-  "author": "Matthias Gemperli <hello@matthiasgemperli.ch>",
+  "author": "Matthias Wolgensinger <hello@matthiasgemperli.ch>",
   "license": "ISC",
   "keywords": [
     "datocms",
     "datocms-plugin",
     "netlify"
-  ],
-  "files": [
-    "dist",
-    "docs"
   ],
   "datoCmsPlugin": {
     "title": "Netlify Forms",
@@ -23,6 +19,10 @@
     "entryPoint": "dist/index.html",
     "permissions": []
   },
+  "files": [
+    "dist",
+    "docs"
+  ],
   "dependencies": {
     "datocms-plugin-sdk": "^2.0.9",
     "datocms-react-ui": "^2.0.9",
@@ -44,18 +44,6 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "repository": {
     "type": "git",
