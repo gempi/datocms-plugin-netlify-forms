@@ -1,6 +1,8 @@
 {
   "name": "datocms-plugin-netlify-forms",
   "version": "0.3.3",
+  "private": false,
+  "type": "module",
   "description": "Plugin that allows DatoCMS show and manage Netlify form submissions",
   "homepage": "https://github.com/gempi/datocms-plugin-netlify-forms#readme",
   "author": "Matthias Gemperli <hello@matthiasgemperli.ch>",
@@ -11,40 +13,37 @@
     "netlify"
   ],
   "files": [
-    "docs",
-    "build"
+    "dist",
+    "docs"
   ],
   "datoCmsPlugin": {
     "title": "Netlify Forms",
     "coverImage": "docs/cover.png",
     "previewImage": "docs/demo.mp4",
-    "entryPoint": "build/index.html",
+    "entryPoint": "dist/index.html",
     "permissions": []
   },
   "dependencies": {
-    "@types/node": "^20.14.2",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "datocms-plugin-sdk": "^1.0.2",
-    "datocms-react-ui": "^1.0.2",
-    "netlify": "^13.1.17",
+    "datocms-plugin-sdk": "^2.0.9",
+    "datocms-react-ui": "^2.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-final-form": "^6.5.9",
-    "react-scripts": "^5.0.1",
-    "typescript": "^5.4.5"
+    "netlify": "^13.1.17",
+    "react-final-form": "^6.5.9"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "globals": "^15.9.0",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
   },
   "scripts": {
-    "start": "cross-env BROWSER='none' PUBLIC_URL='/' react-scripts start",
-    "build": "cross-env PUBLIC_URL='.' react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
     "prepublishOnly": "npm run build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
   },
   "browserslist": {
     "production": [
@@ -58,10 +57,6 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
-  },
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gempi/datocms-plugin-netlify-forms.git"
