@@ -1,6 +1,6 @@
 {
   "name": "datocms-plugin-netlify-forms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "type": "module",
   "description": "Plugin that allows DatoCMS show and manage Netlify form submissions",
