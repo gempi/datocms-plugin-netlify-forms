@@ -3,6 +3,6 @@
 }
 
 .itemTitle {
-  color: var(--light-body-color);
+  color: var(--color--ink-subtle);
   font-size: var(--font-size-s);
 }

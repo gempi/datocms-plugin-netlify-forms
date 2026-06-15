@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px;
-  border-bottom-color: var(--darker-border-color);
+  border-bottom-color: var(--color--border);
   border-bottom-style: solid;
   padding-top: var(--spacing-s);
   padding-bottom: var(--spacing-s);
@@ -10,7 +10,7 @@
 }
 
 .row:hover {
-  background-color: var(--light-color);
+  background-color: var(--color--surface-hover);
   cursor: pointer;
 }
 
@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px;
-  border-bottom-color: var(--darker-border-color);
+  border-bottom-color: var(--color--border);
   border-bottom-style: solid;
   padding-top: var(--spacing-m);
   padding-bottom: var(--spacing-m);
