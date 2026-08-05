@@ -7,12 +7,7 @@ export default class NetlifyClient {
     this.accessToken = accessToken;
   }
 
-  submissionsBySite(
-    site: string,
-    state?: string,
-    per_page?: number,
-    page?: number
-  ) {
+  submissionsBySite(site: string, state?: string, per_page?: number, page?: number) {
     return this.fetch(`/sites/${site}/submissions/`, "GET", {
       state,
       per_page,
@@ -33,15 +28,12 @@ export default class NetlifyClient {
   }
 
   async fetch(path: string, method: string, params?: any) {
-    return fetch(
-      `https://api.netlify.com/api/v1${path}?${new URLSearchParams(params)}`,
-      {
-        method,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-        },
-      }
-    ).then((response) => {
+    return fetch(`https://api.netlify.com/api/v1${path}?${new URLSearchParams(params)}`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    }).then((response) => {
       if (!response.ok) {
         throw Error(`An error has occured: ${response.status}`);
       } else {

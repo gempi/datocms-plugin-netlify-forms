@@ -1,12 +1,5 @@
 import { RenderConfigScreenCtx } from "datocms-plugin-sdk";
-import {
-  Button,
-  Canvas,
-  TextField,
-  Form,
-  FieldGroup,
-  SelectField,
-} from "datocms-react-ui";
+import { Button, Canvas, TextField, Form, FieldGroup, SelectField } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
 import Client from "../utils/client";

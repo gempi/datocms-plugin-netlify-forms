@@ -67,8 +67,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
   const handleOpenDeleteSubmissonModal = async (submission: any) => {
     const result: any = await ctx.openConfirm({
       title: "Delete record?",
-      content:
-        "Are you sure you want to delete this record? This operation is not reversible!",
+      content: "Are you sure you want to delete this record? This operation is not reversible!",
       choices: [
         {
           label: "Yes, delete this record",
@@ -94,10 +93,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     }
   };
 
-  const handleOpenChangeSubmissonStateModal = async (
-    submission: any,
-    type: "ham" | "spam"
-  ) => {
+  const handleOpenChangeSubmissonStateModal = async (submission: any, type: "ham" | "spam") => {
     const result: any = await ctx.openConfirm({
       title: "Change record?",
       content: "Are you sure you want to change this record?",
@@ -152,28 +148,19 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
       >
         <Dropdown
           renderTrigger={({ open, onClick }) => (
-            <Button
-              onClick={onClick}
-              rightIcon={open ? <CaretUpIcon /> : <CaretDownIcon />}
-            >
+            <Button onClick={onClick} rightIcon={open ? <CaretUpIcon /> : <CaretDownIcon />}>
               {type === "ham" ? "Verified" : "Spam"} submissions
             </Button>
           )}
         >
           <DropdownMenu>
-            <DropdownOption onClick={() => setType("ham")}>
-              Verified submissions
-            </DropdownOption>
-            <DropdownOption onClick={() => setType("spam")}>
-              Spam submissions
-            </DropdownOption>
+            <DropdownOption onClick={() => setType("ham")}>Verified submissions</DropdownOption>
+            <DropdownOption onClick={() => setType("spam")}>Spam submissions</DropdownOption>
           </DropdownMenu>
         </Dropdown>
 
         {loading ? (
-          <div
-            style={{ marginTop: "var(--spacing-xxl)", position: "relative" }}
-          >
+          <div style={{ marginTop: "var(--spacing-xxl)", position: "relative" }}>
             <Spinner size={48} placement="centered" />
           </div>
         ) : submissions.length > 0 ? (
@@ -193,9 +180,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                 <div style={{ width: "25%" }}>{item.name}</div>
                 <div style={{ width: "20%" }}>{item.form_name}</div>
                 <div style={{ width: "20%", flexGrow: 0 }}>
-                  {new Intl.DateTimeFormat("en-US").format(
-                    new Date(item.created_at)
-                  )}
+                  {new Intl.DateTimeFormat("en-US").format(new Date(item.created_at))}
                 </div>
 
                 <div style={{ width: "120px", textAlign: "right" }}>
@@ -214,26 +199,18 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                     )}
                   >
                     <DropdownMenu alignment="right">
-                      <DropdownOption
-                        onClick={() => handleShowSubmissionModal(item)}
-                      >
+                      <DropdownOption onClick={() => handleShowSubmissionModal(item)}>
                         Show
                       </DropdownOption>
                       <DropdownOption
                         onClick={() =>
-                          handleOpenChangeSubmissonStateModal(
-                            item,
-                            type === "ham" ? "spam" : "ham"
-                          )
+                          handleOpenChangeSubmissonStateModal(item, type === "ham" ? "spam" : "ham")
                         }
                       >
                         {type === "ham" ? "Mark as spam" : "Mark as verified"}
                       </DropdownOption>
                       <DropdownSeparator />
-                      <DropdownOption
-                        red
-                        onClick={() => handleOpenDeleteSubmissonModal(item)}
-                      >
+                      <DropdownOption red onClick={() => handleOpenDeleteSubmissonModal(item)}>
                         Delete
                       </DropdownOption>
                     </DropdownMenu>
@@ -244,11 +221,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
             <div className={styles.pagination}>
               <div>
-                <Button
-                  buttonSize="s"
-                  onClick={() => setPage(page - 1)}
-                  disabled={page === 1}
-                >
+                <Button buttonSize="s" onClick={() => setPage(page - 1)} disabled={page === 1}>
                   Back
                 </Button>
               </div>

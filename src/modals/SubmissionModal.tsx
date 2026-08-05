@@ -23,9 +23,7 @@ export default function ShowSubmissionModal({ ctx }: PropTypes) {
           <div className={styles.item}>
             <div className={styles.itemTitle}>Create date</div>
             <div>
-              {new Intl.DateTimeFormat("en-US").format(
-                new Date(ctx.parameters.created_at as Date)
-              )}
+              {new Intl.DateTimeFormat("en-US").format(new Date(ctx.parameters.created_at as Date))}
             </div>
           </div>
         </>
