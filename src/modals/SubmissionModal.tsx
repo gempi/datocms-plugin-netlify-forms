@@ -12,6 +12,8 @@ type Field = {
   value: string;
 };
 
+const dateFormatter = new Intl.DateTimeFormat("en-US");
+
 export default function ShowSubmissionModal({ ctx }: PropTypes) {
   const fields = ctx.parameters.ordered_human_fields as Field[];
 
@@ -27,9 +29,7 @@ export default function ShowSubmissionModal({ ctx }: PropTypes) {
           ))}
           <div className={styles.item}>
             <div className={styles.itemTitle}>Create date</div>
-            <div>
-              {new Intl.DateTimeFormat("en-US").format(new Date(ctx.parameters.created_at as Date))}
-            </div>
+            <div>{dateFormatter.format(new Date(ctx.parameters.created_at as Date))}</div>
           </div>
         </>
       ) : (

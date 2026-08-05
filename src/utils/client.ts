@@ -1,6 +1,6 @@
 import { ValidParameters } from "../types";
 
-export default class NetlifyClient {
+class NetlifyClient {
   accessToken: string;
 
   constructor({ accessToken }: ValidParameters) {
@@ -41,4 +41,13 @@ export default class NetlifyClient {
       }
     });
   }
+}
+
+let cachedClient: NetlifyClient | undefined;
+
+export function getClient(accessToken: string) {
+  if (cachedClient?.accessToken !== accessToken) {
+    cachedClient = new NetlifyClient({ accessToken });
+  }
+  return cachedClient;
 }

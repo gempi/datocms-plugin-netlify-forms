@@ -15,7 +15,7 @@ import {
 } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import Client from "../../utils/client";
+import { getClient } from "../../utils/client";
 import { ValidParameters } from "../../types";
 
 type PropTypes = {
@@ -29,6 +29,8 @@ type Submission = {
   created_at: string;
 };
 
+const dateFormatter = new Intl.DateTimeFormat("en-US");
+
 export default function SubmissionsPage({ ctx }: PropTypes) {
   const parameters = ctx.plugin.attributes.parameters as ValidParameters;
   const site = parameters.site;
@@ -40,7 +42,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState("ham");
 
-  const client = new Client({ accessToken });
+  const client = getClient(accessToken);
 
   const getSubmissions = async () => {
     setLoading(true);
@@ -61,6 +63,15 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [site, accessToken, type, page]);
+
+  const refreshSubmissions = async () => {
+    // Resetting page triggers the effect when page > 1; refetch directly when already on page 1.
+    if (page === 1) {
+      await getSubmissions();
+    } else {
+      setPage(1);
+    }
+  };
 
   const handleShowSubmissionModal = async (submission: Submission) => {
     await ctx.openModal({
@@ -91,8 +102,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     if (result) {
       try {
         await client.deleteSubmission(submission.id);
-        await getSubmissions();
-        setPage(1);
+        await refreshSubmissions();
         ctx.notice("Record successfully removed");
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -127,8 +137,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     if (result) {
       try {
         await client.changeSubmissionState(submission.id, type);
-        await getSubmissions();
-        setPage(1);
+        await refreshSubmissions();
         ctx.notice("Record successfully changed");
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -198,7 +207,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                 <div style={{ width: "25%" }}>{item.name}</div>
                 <div style={{ width: "20%" }}>{item.form_name}</div>
                 <div style={{ width: "20%", flexGrow: 0 }}>
-                  {new Intl.DateTimeFormat("en-US").format(new Date(item.created_at))}
+                  {dateFormatter.format(new Date(item.created_at))}
                 </div>
 
                 <div style={{ width: "120px", textAlign: "right" }}>
