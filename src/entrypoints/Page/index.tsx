@@ -14,12 +14,19 @@ import {
   ToolbarTitle,
 } from "datocms-react-ui";
 import { useEffect, useState } from "react";
-import { ValidParameters } from "../ConfigScreen";
 import styles from "./style.module.css";
 import Client from "../../utils/client";
+import { ValidParameters } from "../../types";
 
 type PropTypes = {
   ctx: RenderPageCtx;
+};
+
+type Submission = {
+  id: string;
+  name: string;
+  form_name: string;
+  created_at: string;
 };
 
 export default function SubmissionsPage({ ctx }: PropTypes) {
@@ -27,7 +34,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
   const site = parameters.site;
   const accessToken = parameters.accessToken;
 
-  const [submissions, setSubmissions] = useState([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [page, setPage] = useState<number>(1);
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
@@ -37,7 +44,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
 
   const getSubmissions = async () => {
     setLoading(true);
-    const res = await client.submissionsBySite(site.value, type, 10, page);
+    const res = await client.submissionsBySite(site?.value ?? "", type, 10, page);
     const submissions = await res.json();
 
     const links = res.headers.get("link")?.split(",");
@@ -55,7 +62,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [site, accessToken, type, page]);
 
-  const handleShowSubmissionModal = async (submission: any) => {
+  const handleShowSubmissionModal = async (submission: Submission) => {
     await ctx.openModal({
       id: "showSubmission",
       title: `Submission (${submission.id})`,
@@ -64,8 +71,8 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
     });
   };
 
-  const handleOpenDeleteSubmissonModal = async (submission: any) => {
-    const result: any = await ctx.openConfirm({
+  const handleOpenDeleteSubmissionModal = async (submission: Submission) => {
+    const result = await ctx.openConfirm({
       title: "Delete record?",
       content: "Are you sure you want to delete this record? This operation is not reversible!",
       choices: [
@@ -87,14 +94,21 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
         await getSubmissions();
         setPage(1);
         ctx.notice("Record successfully removed");
-      } catch (error: any) {
-        ctx.alert(error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          ctx.alert(error.message);
+        } else {
+          ctx.alert("An unknown error occurred");
+        }
       }
     }
   };
 
-  const handleOpenChangeSubmissonStateModal = async (submission: any, type: "ham" | "spam") => {
-    const result: any = await ctx.openConfirm({
+  const handleOpenChangeSubmissionStateModal = async (
+    submission: Submission,
+    type: "ham" | "spam",
+  ) => {
+    const result = await ctx.openConfirm({
       title: "Change record?",
       content: "Are you sure you want to change this record?",
       choices: [
@@ -116,8 +130,12 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
         await getSubmissions();
         setPage(1);
         ctx.notice("Record successfully changed");
-      } catch (error: any) {
-        ctx.alert(error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          ctx.alert(error.message);
+        } else {
+          ctx.alert("An unknown error occurred");
+        }
       }
     }
   };
@@ -171,7 +189,7 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
               <div style={{ width: "20%" }}>Date</div>
               <div style={{ width: "120px" }}></div>
             </div>
-            {submissions.map((item: any) => (
+            {submissions.map((item) => (
               <div
                 key={item.id}
                 className={styles.row}
@@ -204,13 +222,16 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
                       </DropdownOption>
                       <DropdownOption
                         onClick={() =>
-                          handleOpenChangeSubmissonStateModal(item, type === "ham" ? "spam" : "ham")
+                          handleOpenChangeSubmissionStateModal(
+                            item,
+                            type === "ham" ? "spam" : "ham",
+                          )
                         }
                       >
                         {type === "ham" ? "Mark as spam" : "Mark as verified"}
                       </DropdownOption>
                       <DropdownSeparator />
-                      <DropdownOption red onClick={() => handleOpenDeleteSubmissonModal(item)}>
+                      <DropdownOption red onClick={() => handleOpenDeleteSubmissionModal(item)}>
                         Delete
                       </DropdownOption>
                     </DropdownMenu>

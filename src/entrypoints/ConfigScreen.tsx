@@ -3,14 +3,15 @@ import { Button, Canvas, TextField, Form, FieldGroup, SelectField } from "datocm
 import { useEffect, useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
 import Client from "../utils/client";
+import { ValidParameters } from "../types";
 
 type PropTypes = {
   ctx: RenderConfigScreenCtx;
 };
 
-export type ValidParameters = {
-  accessToken: string;
-  site: { label: string; value: string };
+type Site = {
+  name: string;
+  site_id: string;
 };
 
 type Parameters = ValidParameters;
@@ -18,7 +19,7 @@ type Parameters = ValidParameters;
 export default function ConfigScreen({ ctx }: PropTypes) {
   const parameters = ctx.plugin.attributes.parameters;
   const accessToken = parameters.accessToken as string;
-  const [sites, setSites] = useState([]);
+  const [sites, setSites] = useState<Site[]>([]);
 
   useEffect(() => {
     const fetchSites = async () => {
@@ -29,8 +30,12 @@ export default function ConfigScreen({ ctx }: PropTypes) {
         const res = await client.sites();
         const sites = await res.json();
         setSites(sites);
-      } catch (error: any) {
-        ctx.alert(error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          ctx.alert(error.message);
+        } else {
+          ctx.alert("An unknown error occurred");
+        }
       }
     };
 
@@ -96,7 +101,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
                       label="Site"
                       error={error}
                       selectInputProps={{
-                        options: sites.map((site: any) => ({
+                        options: sites.map((site) => ({
                           label: site.name,
                           value: site.site_id,
                         })),

@@ -7,14 +7,19 @@ type PropTypes = {
   ctx: RenderModalCtx;
 };
 
+type Field = {
+  title: string;
+  value: string;
+};
+
 export default function ShowSubmissionModal({ ctx }: PropTypes) {
-  const fields = ctx.parameters.ordered_human_fields as any;
+  const fields = ctx.parameters.ordered_human_fields as Field[];
 
   return (
     <Canvas ctx={ctx}>
       {fields.length > 0 ? (
         <>
-          {fields.map((item: any) => (
+          {fields.map((item) => (
             <div key={item.title} className={styles.item}>
               <div className={styles.itemTitle}>{item.title}</div>
               <div>{item.value}</div>
