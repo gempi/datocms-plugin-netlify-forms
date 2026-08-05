@@ -5,8 +5,6 @@ import "datocms-react-ui/styles.css";
 import SubmissionsPage from "./entrypoints/Page";
 import SubmissionModal from "./modals/SubmissionModal";
 
-export const API_ENDPOINT = "https://api.netlify.com/api/v1";
-
 connect({
   renderConfigScreen(ctx) {
     return render(<ConfigScreen ctx={ctx} />);

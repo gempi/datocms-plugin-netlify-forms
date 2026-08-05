@@ -2,16 +2,11 @@ import { RenderConfigScreenCtx } from "datocms-plugin-sdk";
 import { Button, Canvas, TextField, Form, FieldGroup, SelectField } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import { Form as FormHandler, Field } from "react-final-form";
-import { getClient } from "../utils/client";
+import { getClient, Site } from "../utils/client";
 import { ValidParameters } from "../types";
 
 type PropTypes = {
   ctx: RenderConfigScreenCtx;
-};
-
-type Site = {
-  name: string;
-  site_id: string;
 };
 
 type Parameters = ValidParameters;
@@ -26,9 +21,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
       setSites([]);
 
       try {
-        const client = getClient(accessToken);
-        const res = await client.sites();
-        const sites = await res.json();
+        const sites = await getClient(accessToken).listSites();
         setSites(sites);
       } catch (error: unknown) {
         if (error instanceof Error) {

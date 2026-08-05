@@ -15,18 +15,11 @@ import {
 } from "datocms-react-ui";
 import { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import { getClient } from "../../utils/client";
+import { getClient, Submission } from "../../utils/client";
 import { ValidParameters } from "../../types";
 
 type PropTypes = {
   ctx: RenderPageCtx;
-};
-
-type Submission = {
-  id: string;
-  name: string;
-  form_name: string;
-  created_at: string;
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US");
@@ -40,21 +33,36 @@ export default function SubmissionsPage({ ctx }: PropTypes) {
   const [page, setPage] = useState<number>(1);
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState("ham");
+  const [type, setType] = useState<"ham" | "spam">("ham");
 
   const client = getClient(accessToken);
 
   const getSubmissions = async () => {
+    if (!site?.value) {
+      return;
+    }
+
     setLoading(true);
-    const res = await client.submissionsBySite(site?.value ?? "", type, 10, page);
-    const submissions = await res.json();
-
-    const links = res.headers.get("link")?.split(",");
-    const lastPage = links?.[links.length - 1].match(/&page=(\d+).*$/)?.[1];
-    setNumberOfPages(Number(lastPage));
-
-    setSubmissions(submissions);
-    setLoading(false);
+    try {
+      const { submissions, lastPage } = await client.listSiteSubmissions(
+        site.value,
+        type,
+        10,
+        page,
+      );
+      setNumberOfPages(lastPage);
+      setSubmissions(submissions);
+    } catch (error: unknown) {
+      setSubmissions([]);
+      setNumberOfPages(1);
+      if (error instanceof Error) {
+        ctx.alert(error.message);
+      } else {
+        ctx.alert("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
