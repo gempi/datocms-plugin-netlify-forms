@@ -1,5 +1,11 @@
 # datocms-plugin-netlify-forms
 
+## 1.0.10
+
+### Patch Changes
+
+- 5af7f01: Upgrade deps
+
 ## 1.0.9
 
 ### Patch Changes
