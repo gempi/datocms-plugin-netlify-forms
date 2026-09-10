@@ -31,23 +31,23 @@
   "dependencies": {
     "@stylexjs/stylex": "^0.19.0",
     "@stylexjs/unplugin": "^0.19.0",
-    "datocms-plugin-sdk": "^2.2.2",
-    "datocms-react-ui": "^2.2.4",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
+    "datocms-plugin-sdk": "^2.4.2",
+    "datocms-react-ui": "^2.2.7",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-final-form": "^7.0.1"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "@vitejs/plugin-react": "^6.0.4",
-    "globals": "^17.9.0",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "globals": "^17.12.0",
     "oxfmt": "^0.62.0",
-    "oxlint": "^1.76.0",
-    "simple-git-hooks": "^2.13.1",
+    "oxlint": "^1.82.0",
+    "simple-git-hooks": "^2.14.0",
     "typescript": "^6.0.3",
-    "vite": "^8.1.5"
+    "vite": "^8.2.2"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint && npm run fmt"
