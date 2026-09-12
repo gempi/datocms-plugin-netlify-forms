@@ -1,5 +1,12 @@
 # datocms-plugin-netlify-forms
 
+## 1.0.11
+
+### Patch Changes
+
+- 9c3998c: Upgrade formatter
+- 9dae764: Migrate Changesets from v2 to v3
+
 ## 1.0.10
 
 ### Patch Changes
