@@ -1,5 +1,11 @@
 # datocms-plugin-netlify-forms
 
+## 1.0.12
+
+### Patch Changes
+
+- 6c28c80: Update dependencies and fix build errors caused by possibly null plugin parameters in the config screen
+
 ## 1.0.11
 
 ### Patch Changes
