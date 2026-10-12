@@ -12,7 +12,7 @@ type PropTypes = {
 type Parameters = ValidParameters;
 
 export default function ConfigScreen({ ctx }: PropTypes) {
-  const parameters = ctx.plugin.attributes.parameters;
+  const parameters = ctx.plugin.attributes.parameters ?? {};
   const accessToken = parameters.accessToken as string;
   const [sites, setSites] = useState<Site[]>([]);
 
@@ -38,7 +38,7 @@ export default function ConfigScreen({ ctx }: PropTypes) {
   return (
     <Canvas ctx={ctx}>
       <FormHandler<Parameters>
-        initialValues={ctx.plugin.attributes.parameters}
+        initialValues={parameters}
         validate={(values) => {
           const errors: Record<string, string> = {};
 
