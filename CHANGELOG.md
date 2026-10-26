@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- 8881919: Upgrade oxfmt to 0.74.0 to fix critical tinypool prototype pollution vulnerabilities
+
+## 1.0.12
+
+### Patch Changes
+
 - 6c28c80: Update dependencies and fix build errors caused by possibly null plugin parameters in the config screen
 
 ## 1.0.11
